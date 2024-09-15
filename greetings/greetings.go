@@ -6,15 +6,30 @@ import (
 	"math/rand"
 )
 
-// Hello returns a greeting for the named person.
 func Hello(name string) (string, error) {
-	//if no name was given, return an error
+	// If no name was given, return an error with a message.
 	if name == "" {
-		return "", errors.New("empty name")
+		return name, errors.New("empty name")
 	}
-	// Return a greeting that embeds the name in a message.
+	// Create a message using a random format.
 	message := fmt.Sprintf(randomFormat(), name)
 	return message, nil
+}
+
+// Hello returns a greeting for the named person.
+func Hellos(names []string) (map[string]string, error) {
+	//if no name was given, return an error
+	messages := make(map[string]string)
+	for _, name := range names {
+		message, err := Hello(name)
+		if err != nil {
+			return nil, err
+		}
+		messages[name] = message
+	}
+	// Return a greeting that embeds the name in a message.
+
+	return messages, nil
 }
 
 func randomFormat() string {
